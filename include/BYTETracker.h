@@ -4,10 +4,10 @@
 
 struct Rect
 {
-	float height;
-	float width;
 	float x;
 	float y;
+	float width;
+	float height;
 };
 
 struct Object

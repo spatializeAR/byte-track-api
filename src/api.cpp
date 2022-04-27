@@ -1,14 +1,88 @@
 #include <iostream>
+#include <iterator>
+#include <vector>
 #include "BYTETracker.h"
 
-int main(int argc, char** argv) {
-    BYTETracker tracker(30, 30);
+struct Track
+{
+    int id;
+    int state;
 
-    vector<Object> objects {
-        { { 20, 10, 5, 10}, 2, 0.9 },
-        { { 20, 10, 30, 10}, 2, 0.8 },
+    float top;
+    float left;
+    float bottom;
+    float right;
+
+    int start_frame;
+    float score;
+};
+
+static BYTETracker * _tracker = NULL;
+static std::vector<Track> _tracks;
+
+Track to_track(const STrack& strack)
+{
+    Track track {
+        strack.track_id,
+        strack.state,
+
+        strack.tlbr[0],
+        strack.tlbr[1],
+        strack.tlbr[2],
+        strack.tlbr[3],
+
+        strack.start_frame,
+        strack.score
     };
-    vector<STrack> tracks = tracker.update(objects);
-    cout << "tracks: " << tracks.size() << endl;
+    return track;
+}
+
+extern "C" {
+    void byte_track_destroy() {
+        if(_tracker) {
+            delete _tracker;
+            _tracker = NULL;
+        }
+    }
+
+    void byte_track_create(const int frame_rate, const int track_buffer) {
+        byte_track_destroy();
+        _tracker = new BYTETracker(frame_rate, track_buffer);
+    }
+
+    const Track* byte_track_update(const Object* objects, const size_t num_object, int* num_track) {
+        vector<Object> v_objects(objects, objects + num_object);
+
+        vector<STrack> stracks = _tracker->update(v_objects);
+        _tracks.clear();
+        for(auto& strack : stracks) {
+            _tracks.push_back(to_track(strack));
+        }
+        *num_track = _tracks.size();
+        return _tracks.data();
+    }
+}
+
+int main(int argc, char** argv) {
+    byte_track_create(30, 30);
+
+    const vector<Object> objects {
+        { { 5, 10, 10, 10, }, 2, 0.9 },
+        { { 30, 31, 5, 10, }, 2, 0.8 },
+    };
+    int num_track;
+    const Track* tracks = byte_track_update(objects.data(), objects.size(), &num_track);
+    
+    cout << "tracks: " << num_track << endl;
+
+    for(int i = 0; i < num_track; ++i) {
+        const Track& track = tracks[i];
+        cout << "state:" << track.state << " id:" << track.id 
+            << " tlbr:" << track.top << ',' << track.left << ',' << track.bottom << ',' << track.left
+            << endl;
+    }
+
+    byte_track_destroy();
+
     return 0;
 }
