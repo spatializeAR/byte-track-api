@@ -1,3 +1,5 @@
+#include <iostream>
+#include <map>
 #include "BYTETracker.h"
 #include "lapjv.h"
 
@@ -422,8 +424,8 @@ double BYTETracker::lapjv(const vector<vector<float> > &cost, vector<int> &rowso
 	return opt;
 }
 
-Scalar BYTETracker::get_color(int idx)
-{
-	idx += 3;
-	return Scalar(37 * idx % 255, 17 * idx % 255, 29 * idx % 255);
-}
+// Scalar BYTETracker::get_color(int idx)
+// {
+	// idx += 3;
+	// return Scalar(37 * idx % 255, 17 * idx % 255, 29 * idx % 255);
+// }

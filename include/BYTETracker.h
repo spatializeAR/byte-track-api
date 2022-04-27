@@ -24,7 +24,7 @@ public:
 	~BYTETracker();
 
 	vector<STrack> update(const vector<Object>& objects);
-	Scalar get_color(int idx);
+	// Scalar get_color(int idx);
 
 private:
 	vector<STrack*> joint_stracks(vector<STrack*> &tlista, vector<STrack> &tlistb);

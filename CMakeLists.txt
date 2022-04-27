@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 
 project(bytetrack)
 
@@ -10,8 +10,10 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # find_package(CUDA REQUIRED)
 
+find_package(Eigen3 REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(/usr/local/include/eigen3)
+# include_directories(/usr/local/include/eigen3)
+include_directories(${PROJECT_SOURCE_DIR}/libs/eigen3)
 link_directories(${PROJECT_SOURCE_DIR}/include)
 # include and link dirs of cuda and tensorrt, you need adapt them if yours are different
 # cuda
@@ -26,14 +28,14 @@ link_directories(${PROJECT_SOURCE_DIR}/include)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Ofast -Wfatal-errors -D_MWAITXINTRIN_H_INCLUDED")
 
-find_package(OpenCV)
-include_directories(${OpenCV_INCLUDE_DIRS})
+# find_package(OpenCV)
+# include_directories(${OpenCV_INCLUDE_DIRS})
 
 file(GLOB My_Source_Files ${PROJECT_SOURCE_DIR}/src/*.cpp)
 add_executable(bytetrack ${My_Source_Files})
-target_link_libraries(bytetrack nvinfer)
-target_link_libraries(bytetrack cudart)
-target_link_libraries(bytetrack ${OpenCV_LIBS})
+# target_link_libraries(bytetrack nvinfer)
+# target_link_libraries(bytetrack cudart)
+# target_link_libraries(bytetrack ${OpenCV_LIBS})
 
 add_definitions(-O2 -pthread)
 

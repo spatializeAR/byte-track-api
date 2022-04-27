@@ -83,7 +83,7 @@ namespace byte_kalman
 		covariance = covariance1;
 	}
 
-	KAL_HDATA KalmanFilter::project(const KAL_MEAN &mean, const floa &covariance)
+	KAL_HDATA KalmanFilter::project(const KAL_MEAN &mean, const KAL_COVA &covariance)
 	{
 		DETECTBOX std;
 		std << _std_weight_position * mean(3), _std_weight_position * mean(3),
