@@ -1,9 +1,8 @@
 #pragma once
 
-#include <opencv2/opencv.hpp>
+#include <vector>
 #include "kalmanFilter.h"
 
-using namespace cv;
 using namespace std;
 
 enum TrackState { New = 0, Tracked, Lost, Removed };

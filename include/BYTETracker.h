@@ -2,9 +2,17 @@
 
 #include "STrack.h"
 
+struct Rect
+{
+	float height;
+	float width;
+	float x;
+	float y;
+};
+
 struct Object
 {
-    cv::Rect_<float> rect;
+    Rect rect;
     int label;
     float prob;
 };
