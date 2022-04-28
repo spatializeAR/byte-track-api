@@ -41,7 +41,7 @@ extern "C" {
     /**
      * @brief Destroy ByteTrack
      */
-    void byte_track_destroy() {
+    void byte_track_dispose() {
         if(_tracker) {
             delete _tracker;
             _tracker = NULL;
@@ -53,8 +53,8 @@ extern "C" {
      * @param frame_rate A frame rate of the input
      * @param track_buffer A buffer size of each track
      */ 
-    void byte_track_create(const int frame_rate, const int track_buffer) {
-        byte_track_destroy();
+    void byte_track_init(const int frame_rate, const int track_buffer) {
+        byte_track_dispose();
         _tracker = new BYTETracker(frame_rate, track_buffer);
     }
 
@@ -65,7 +65,7 @@ extern "C" {
      * @param num_track A count of detected tracks
      * @return An array of estimated tracks
      */
-    const Track* byte_track_update(const Object* objects, const size_t num_object, int* num_track) {
+    Track* byte_track_update(const Object* objects, const size_t num_object, int* num_track) {
         vector<Object> v_objects(objects, objects + num_object);
 
         vector<STrack> stracks = _tracker->update(v_objects);
@@ -79,7 +79,7 @@ extern "C" {
 }
 
 int main(int argc, char** argv) {
-    byte_track_create(30, 30);
+    byte_track_init(30, 30);
 
     const vector<Object> objects {
         { { 5, 10, 10, 10, }, 2, 0.9 },
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
             << endl;
     }
 
-    byte_track_destroy();
+    byte_track_dispose();
 
     return 0;
 }
