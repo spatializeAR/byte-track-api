@@ -38,6 +38,9 @@ Track to_track(const STrack& strack)
 }
 
 extern "C" {
+    /**
+     * @brief Destroy ByteTrack
+     */
     void byte_track_destroy() {
         if(_tracker) {
             delete _tracker;
@@ -45,11 +48,23 @@ extern "C" {
         }
     }
 
+    /**
+     * @brief Initialize ByteTrack
+     * @param frame_rate A frame rate of the input
+     * @param track_buffer A buffer size of each track
+     */ 
     void byte_track_create(const int frame_rate, const int track_buffer) {
         byte_track_destroy();
         _tracker = new BYTETracker(frame_rate, track_buffer);
     }
 
+    /**
+     * @brief Track the objects in the image
+     * @param object An array of detected objects
+     * @param num_object A count of objects
+     * @param num_track A count of detected tracks
+     * @return An array of estimated tracks
+     */
     const Track* byte_track_update(const Object* objects, const size_t num_object, int* num_track) {
         vector<Object> v_objects(objects, objects + num_object);
 
