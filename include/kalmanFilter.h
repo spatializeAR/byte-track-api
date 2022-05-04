@@ -7,7 +7,6 @@ namespace byte_kalman
 	class KalmanFilter
 	{
 	public:
-		static const double chi2inv95[10];
 		KalmanFilter();
 		KAL_DATA initiate(const DETECTBOX& measurement);
 		void predict(KAL_MEAN& mean, KAL_COVA& covariance);
