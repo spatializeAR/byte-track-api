@@ -7,6 +7,7 @@ struct Track
 {
     int id;
     int state;
+    int label;
 
     // rect
     float x;
@@ -26,6 +27,7 @@ Track to_track(const STrack& strack)
     Track track {
         strack.track_id,
         strack.state,
+        strack.label,
 
         strack.tlwh[0],
         strack.tlwh[1],

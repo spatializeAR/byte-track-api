@@ -1,6 +1,6 @@
 #include "STrack.h"
 
-STrack::STrack(vector<float> tlwh_, float score)
+STrack::STrack(vector<float> tlwh_, int label_, float score)
 {
 	_tlwh.resize(4);
 	_tlwh.assign(tlwh_.begin(), tlwh_.end());
@@ -8,7 +8,8 @@ STrack::STrack(vector<float> tlwh_, float score)
 	is_activated = false;
 	track_id = 0;
 	state = TrackState::New;
-	
+	label = label_;
+
 	tlwh.resize(4);
 	tlbr.resize(4);
 
