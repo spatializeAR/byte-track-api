@@ -42,7 +42,7 @@ build_android() {
   # Build Android arm64-v8a
   cmake -S . -B $BUILDDIR \
     -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
-    -DCMAKE_SYSTEM_VERSION=30 \
+    -DCMAKE_SYSTEM_VERSION=29 \
     -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a \
     -DCMAKE_ANDROID_NDK=$NDK \
     -DCMAKE_ANDROID_STL_TYPE=c++_static
@@ -52,7 +52,7 @@ build_android() {
   # Build Android armeabi-v7a
   cmake -S . -B $BUILDDIR \
     -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
-    -DCMAKE_SYSTEM_VERSION=30 \
+    -DCMAKE_SYSTEM_VERSION=29 \
     -DCMAKE_ANDROID_ARCH_ABI=armeabi-v7a \
     -DCMAKE_ANDROID_NDK=$NDK \
     -DCMAKE_ANDROID_STL_TYPE=c++_static
