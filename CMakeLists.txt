@@ -19,4 +19,5 @@ file(GLOB My_Source_Files ${PROJECT_SOURCE_DIR}/src/*.cpp)
 # add_executable(bytetrack ${My_Source_Files})
 
 # for release
-add_library(bytetrack SHARED ${My_Source_Files})
+# add_library(bytetrack SHARED ${My_Source_Files})
+add_library(bytetrack STATIC ${My_Source_Files})

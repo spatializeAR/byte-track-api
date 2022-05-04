@@ -1,13 +1,23 @@
 #!/bin/bash -xe
 
 build_macos() {
+  OUTDIR=build/Release
+
+  # Build macOS Arm64
   cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=MAC_ARM64
   cmake --build build --config Release
+  mv $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-arm64.dylib
+  # Build macOS x86_64
+  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=MAC
+  cmake --build build --config Release
+  mv $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-x86_64.dylib
+  # Combine them into a fat library
+  lipo -create -output $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-arm64.dylib $OUTDIR/libbytetrack-x86_64.dylib
 }
 
 build_ios() {
-  cmake -S . -B build
-  echo 'todo'
+  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=OS64COMBINED -DENABLE_BITCODE=1
+  cmake --build build --config Release
 }
 
 build_android() {
@@ -29,7 +39,7 @@ case "$1" in
   ;;
 
   "--ios")
-    echo 'ios'
+    build_ios
   ;;
 
   "--android")
@@ -38,14 +48,12 @@ case "$1" in
 
   "--all")
     build_macos
-  ;;
-
-  "--run")
-    echo 'run'
+    build_ios
+    build_android
   ;;
 
   *)
-    echo 'usage: ./build.sh [--macos|--ios|--android|--all|--run]'
+    echo 'usage: ./build.sh [--macos|--ios|--android|--all]'
     exit 1
   ;;
 esac

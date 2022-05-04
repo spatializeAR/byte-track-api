@@ -75,7 +75,7 @@ extern "C" {
         for(auto& strack : stracks) {
             _tracks.push_back(to_track(strack));
         }
-        *num_track = _tracks.size();
+        *num_track = (int)_tracks.size();
         return _tracks.data();
     }
 }

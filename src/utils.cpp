@@ -289,7 +289,7 @@ double BYTETracker::lapjv(const vector<vector<float> > &cost, vector<int> &rowso
 		if (!extend_cost)
 		{
 			cout << "set extend_cost=True" << endl;
-			system("pause");
+			// system("pause");
 			exit(0);
 		}
 	}
@@ -370,7 +370,7 @@ double BYTETracker::lapjv(const vector<vector<float> > &cost, vector<int> &rowso
 	if (ret != 0)
 	{
 		cout << "Calculate Wrong!" << endl;
-		system("pause");
+		// system("pause");
 		exit(0);
 	}
 
