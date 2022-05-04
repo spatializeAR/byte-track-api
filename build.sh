@@ -1,23 +1,38 @@
 #!/bin/bash -xe
 
 build_macos() {
-  OUTDIR=build/Release
+  BUILDDIR=build.macos
+  OUTDIR=$BUILDDIR/Release
 
   # Build macOS Arm64
-  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=MAC_ARM64
-  cmake --build build --config Release
+  cmake -S . -B $BUILDDIR -G Xcode \
+    -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake \
+    -DPLATFORM=MAC_ARM64
+  cmake --build $BUILDDIR --config Release
   mv $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-arm64.dylib
+
   # Build macOS x86_64
-  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=MAC
-  cmake --build build --config Release
+  cmake -S . -B $BUILDDIR -G Xcode \
+    -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake \
+    -DPLATFORM=MAC
+  cmake --build $BUILDDIR --config Release
   mv $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-x86_64.dylib
+
   # Combine them into a fat library
-  lipo -create -output $OUTDIR/libbytetrack.dylib $OUTDIR/libbytetrack-arm64.dylib $OUTDIR/libbytetrack-x86_64.dylib
+  lipo -create -output $OUTDIR/libbytetrack.dylib \
+    $OUTDIR/libbytetrack-arm64.dylib \
+    $OUTDIR/libbytetrack-x86_64.dylib
 }
 
 build_ios() {
-  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=OS64COMBINED -DENABLE_BITCODE=1
-  cmake --build build --config Release
+  BUILDDIR=build.ios
+
+  cmake -S . -B $BUILDDIR -G Xcode \
+    -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake \
+    -DPLATFORM=OS64COMBINED \
+    -DENABLE_BITCODE=1 \
+    -DIS_STATIC_LIBRARY=1
+  cmake --build $BUILDDIR --config Release
 }
 
 build_android() {
