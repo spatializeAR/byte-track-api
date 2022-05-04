@@ -36,28 +36,28 @@ build_ios() {
 }
 
 build_android() {
-  BUILDDIR=build.android
+  
   NDK=$ANDROID_HOME/ndk-bundle/
 
   # Build Android arm64-v8a
+  BUILDDIR=build.android.arm64-v8a
   cmake -S . -B $BUILDDIR \
-    -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+    -DCMAKE_SYSTEM_NAME=Android \
     -DCMAKE_SYSTEM_VERSION=29 \
     -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a \
     -DCMAKE_ANDROID_NDK=$NDK \
     -DCMAKE_ANDROID_STL_TYPE=c++_static
-  cmake --build $BUILDDIR
-  mv $BUILDDIR/libbytetrack.so $BUILDDIR/libbytetrack-arm64-v8a.so
-
+  cmake --build $BUILDDIR --config Release
+  
   # Build Android armeabi-v7a
+  BUILDDIR=build.android.armeabi-v7a
   cmake -S . -B $BUILDDIR \
-    -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+    -DCMAKE_SYSTEM_NAME=Android \
     -DCMAKE_SYSTEM_VERSION=29 \
     -DCMAKE_ANDROID_ARCH_ABI=armeabi-v7a \
     -DCMAKE_ANDROID_NDK=$NDK \
     -DCMAKE_ANDROID_STL_TYPE=c++_static
-  cmake --build $BUILDDIR
-  mv $BUILDDIR/libbytetrack.so $BUILDDIR/libbytetrack-armeabi-v7a.so
+  cmake --build $BUILDDIR --config Release
 }
 
 case "$1" in
