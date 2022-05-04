@@ -1,8 +1,8 @@
 #!/bin/bash -xe
 
 build_macos() {
-  cmake -S . -B build
-  cmake --build build
+  cmake -S . -B build -G Xcode -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DPLATFORM=MAC_ARM64
+  cmake --build build --config Release
 }
 
 build_ios() {
