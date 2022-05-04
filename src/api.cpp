@@ -8,10 +8,11 @@ struct Track
     int id;
     int state;
 
-    float top;
-    float left;
-    float bottom;
-    float right;
+    // rect
+    float x;
+    float y;
+    float width;
+    float height;
 
     int start_frame;
     float score;
@@ -26,10 +27,10 @@ Track to_track(const STrack& strack)
         strack.track_id,
         strack.state,
 
-        strack.tlbr[0],
-        strack.tlbr[1],
-        strack.tlbr[2],
-        strack.tlbr[3],
+        strack.tlwh[0],
+        strack.tlwh[1],
+        strack.tlwh[2],
+        strack.tlwh[3],
 
         strack.start_frame,
         strack.score
@@ -93,7 +94,7 @@ int main(int argc, char** argv) {
     for(int i = 0; i < num_track; ++i) {
         const Track& track = tracks[i];
         cout << "state:" << track.state << " id:" << track.id 
-            << " tlbr:" << track.top << ',' << track.left << ',' << track.bottom << ',' << track.left
+            << " rect:" << track.x << ',' << track.y << ',' << track.width << ',' << track.height
             << endl;
     }
 
