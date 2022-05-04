@@ -47,6 +47,7 @@ extern "C" {
             delete _tracker;
             _tracker = NULL;
         }
+        _tracks.clear();
     }
 
     /**
