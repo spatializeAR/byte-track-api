@@ -1,8 +1,9 @@
 name: Build on macOS
 
 on:
-  release:
-    types: [created]
+  create:
+    tags:
+      - v*
   workflow_dispatch:
 
 jobs:
@@ -16,7 +17,7 @@ jobs:
         run: ./build.sh --macos
       
       - name: Build ios
-        run: ./build.sh --macos
+        run: ./build.sh --ios
       
       - name: Build android
         run: ./build.sh --android
