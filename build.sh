@@ -62,17 +62,26 @@ build_android() {
   cmake --build $BUILDDIR --config Release
 }
 
+
 case "$1" in
   "--macos")
     build_macos
+    mkdir -p release/macOS/
+    cp build.macos/Release/libbytetrack.dylib release/macOS/
   ;;
 
   "--ios")
     build_ios
+    mkdir -p release/iOS/
+    cp build.ios/Release-iphoneos/libbytetrack.a release/iOS/
   ;;
 
   "--android")
     build_android
+    mkdir -p release/Android/arm64/
+    cp build.android.arm64-v8a/libbytetrack.so release/Android/arm64/
+    mkdir -p release/Android/armv7/
+    cp build.android.armeabi-v7a/libbytetrack.so release/Android/armv7/
   ;;
 
   "--all")
