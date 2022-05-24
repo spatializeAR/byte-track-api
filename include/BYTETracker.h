@@ -1,21 +1,7 @@
 #pragma once
 
 #include "STrack.h"
-
-struct Rect
-{
-	float x;
-	float y;
-	float width;
-	float height;
-};
-
-struct Object
-{
-    Rect rect;
-    int label;
-    float prob;
-};
+#include "api.h"
 
 class BYTETracker
 {

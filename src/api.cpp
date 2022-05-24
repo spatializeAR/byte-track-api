@@ -2,22 +2,7 @@
 #include <iterator>
 #include <vector>
 #include "BYTETracker.h"
-
-struct Track
-{
-    int id;
-    int state;
-    int label;
-
-    // rect
-    float x;
-    float y;
-    float width;
-    float height;
-
-    int start_frame;
-    float score;
-};
+#include "api.h"
 
 static BYTETracker * _tracker = NULL;
 static std::vector<Track> _tracks;
