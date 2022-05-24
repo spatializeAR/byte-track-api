@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+#  Build script for ByteTrack C-API
+
 build_macos() {
   BUILDDIR=build.macos
   OUTDIR=$BUILDDIR/Release
